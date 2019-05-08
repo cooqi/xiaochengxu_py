@@ -1,0 +1,45 @@
+<view class="container">
+
+    <view class="search-bar">
+        <input type="text" value='{{inputVal}}' bindinput='input' bindfocus='input' placeholder='搜索小区名称' placeholder-class="placeholder"></input>
+        <image class='clear' mode="widthFix" src="../../image/clear.png" bindtap='clear' hidden='{{inputVal == ""}}'></image>
+    </view>
+
+    
+
+    <!-- 搜索结果列表 -->
+    <view class='list-detail' hidden="{{!inputListShow}}">
+        <scroll-view scroll-y="true" style="height:100%;">
+            <view class='item-nav' wx:for="{{searchList}}" data-name="{{item.name}}" bindtap='selectXiaoqu' wx:key="key">
+             {{item.name}}
+            </view>
+        </scroll-view>
+    </view>
+
+    <!-- 列表 -->
+    <view class='list-city' hidden="{{!xiaoquListShow}}">
+        <scroll-view scroll-y="true" style="height:100%;" scroll-into-view="{{scrollTopId}}" scroll-with-animation="true" enable-back-to-top="true">
+            <view class='item'>
+                <view class='fullname'>当前位置：</view>
+            </view>
+
+            <!-- 全部 -->
+            <view class='item' wx:for="{{xiaoquData}}" wx:for-index="idx" wx:for-item="group" wx:key="idx">
+                <view class='py' id="{{group.letter}}">{{group.letter}}</view>
+                <view class="fullname" wx:for="{{group.data}}" wx:key="key" data-name="{{item.name}}"  bindtap='selectXiaoqu'>{{item.name}}
+                </view>
+            </view>
+
+        </scroll-view>
+
+        <!-- 首字母 -->
+        <view class='city-py' bindtouchstart="tStart" bindtouchend="tEnd" catchtouchmove="tMove">
+            <view wx:for="{{_py}}" wx:key="key" bindtouchstart="getPy" bindtouchend="setPy" id="{{item}}" class='city-py-item'>{{item}}
+            </view>
+        </view>
+    </view>
+
+</view>
+
+<!--选择显示-->
+<view hidden="{{hidden}}" class="showPy">{{showPy}}</view>
